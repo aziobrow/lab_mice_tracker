@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe "find mouse API" do
     let(:mouse1) { create(:mouse) }
@@ -16,7 +16,7 @@ describe "find mouse API" do
     let(:mouse13) { create(:mouse, mean_temp: 84.8, weight_in_grams: 41.3)  }
 
   it "responds with all attributes of a mouse" do
-    get "/api/v1/mice/find?original_id=#{mouse1.original_id}"
+    get "/api/v1/mice/find?id=#{mouse1.id}"
 
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
@@ -57,7 +57,7 @@ describe "find mouse API" do
   end
 
   it "finds trisomic" do
-    get 'api/v1/mice/find?trisomic=true'
+    get "api/v1/mice/find?trisomic=#{mouse2.trisomic}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -77,7 +77,7 @@ describe "find mouse API" do
   end
 
   it "finds by protein" do
-    get 'api/v1/mice/find?protein_ug_per_ml=3'
+    get "api/v1/mice/find?protein_ug_per_ml=3"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -97,7 +97,7 @@ describe "find mouse API" do
   end
 
   it "finds by diet" do
-    get 'api/v1/mice/find?diet=rapa'
+    get "api/v1/mice/find?diet=#{mouse5.diet}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -117,7 +117,7 @@ describe "find mouse API" do
   end
 
   it "finds by color" do
-    get 'api/v1/mice/find?color=black'
+    get "api/v1/mice/find?color=#{mouse6.color}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -137,7 +137,7 @@ describe "find mouse API" do
   end
 
   it "finds by sex" do
-    get 'api/v1/find?sex=female'
+    get "api/v1/find?sex=#{mouse8.sex}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -157,7 +157,7 @@ describe "find mouse API" do
   end
 
   it "finds by date of birth" do
-    get 'api/v1/mice/find?date_of_birth=1/1/2017'
+    get "api/v1/mice/find?date_of_birth=#{mouse7.date_of_birth}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -177,7 +177,7 @@ describe "find mouse API" do
   end
 
   it "finds by experiment start date" do
-    get 'api/v1/mice/find?experiment_start_date=3/1/2017'
+    get "api/v1/mice/find?experiment_start_date=#{mouse8.experiment_start_date}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -197,7 +197,7 @@ describe "find mouse API" do
   end
 
   it "finds by harvest date" do
-    get 'api/v1/mice/find?harvest_date=12/31/2017'
+    get "api/v1/mice/find?harvest_date=#{mouse9.harvest_date}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -217,7 +217,7 @@ describe "find mouse API" do
   end
 
   it "finds by group number" do
-    get 'api/v1/mice/find?group=12'
+    get "api/v1/mice/find?group=#{mouse10.group}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -237,7 +237,7 @@ describe "find mouse API" do
   end
 
   it "finds by mean temperature" do
-    get 'api/v1/mice/find?mean_temp=80'
+    get "api/v1/mice/find?mean_temp=80"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -257,7 +257,7 @@ describe "find mouse API" do
   end
 
   it "finds by weight in grams" do
-    get 'api/v1/mice/find?weight_in_grams=40'
+    get "api/v1/mice/find?weight_in_grams=40"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success

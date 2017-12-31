@@ -6,6 +6,11 @@ Rails.application.routes.draw do
         get '/all' => :index, as: 'mice'
         get '/mouse/:original_id' => :show, as: 'mouse'
       end
+
+      controller :search do
+        get '/find' => :show
+      end
+
     end
   end
 end
