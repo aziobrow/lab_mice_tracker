@@ -7,8 +7,10 @@ Rails.application.routes.draw do
         get '/mouse/:original_id' => :show, as: 'mouse'
       end
 
-      controller :search do
-        get '/find' => :show
+      namespace :mice do
+        controller :search do
+          get '/find' => :index
+        end
       end
 
     end

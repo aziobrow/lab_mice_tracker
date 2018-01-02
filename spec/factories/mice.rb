@@ -12,5 +12,50 @@ FactoryBot.define do
     group "6"
     mean_temp 93.2
     weight_in_grams 39.8
+
+    factory :mouse_trisomic_true do
+      trisomic true
+    end
+
+    factory :mouse_three_g_protein do
+      protein_ug_per_ml 3.045
+    end
+
+    factory :mouse_rapa_diet do
+      diet "rapa"
+    end
+
+    factory :mouse_black do
+      color "black"
+    end
+
+    factory :mouse_female do
+      sex "Female"
+    end
+
+    factory :mouse_born_yesterday do
+      date_of_birth Date.yesterday
+    end
+
+    factory :mouse_started_today do
+      experiment_start_date Date.today
+    end
+
+    factory :mouse_harvested_tomorrow do
+      harvest_date Date.tomorrow
+    end
+
+    factory :mouse_group_twelve do
+      group "12"
+    end
+
+    factory :mouse_low_mean_temp do
+      mean_temp 88.9
+    end
+
+    factory :mouse_heavy do
+      weight_in_grams 40.2
+    end
+    
   end
 end

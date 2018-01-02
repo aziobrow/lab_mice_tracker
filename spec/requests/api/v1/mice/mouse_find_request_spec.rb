@@ -15,9 +15,24 @@ describe "find mouse API" do
     let(:mouse12) { create(:mouse, mean_temp: 87.5, weight_in_grams: 44.6)  }
     let(:mouse13) { create(:mouse, mean_temp: 84.8, weight_in_grams: 41.3)  }
 
+  before do
+    mouse1
+    mouse2
+    mouse3
+    mouse4
+    mouse5
+    mouse6
+    mouse7
+    mouse8
+    mouse9
+    mouse10
+    mouse11
+    mouse12
+    mouse13
+  end
+
   it "responds with all attributes of a mouse" do
     get "/api/v1/mice/find?id=#{mouse1.id}"
-
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -38,27 +53,27 @@ describe "find mouse API" do
 
   it "finds by original id" do
     get "/api/v1/mice/find?original_id=#{mouse1.original_id}"
-    mouse_info = JSON.parse(response.body, symbolize_names: true)
-
+    first_mouse_info = JSON.parse(response.body, symbolize_names: true)[0]
     expect(response).to be_success
-    expect(mouse_info).to have_value(mouse1.id)
-    expect(mouse_info).to_not have_value(mouse2.id)
-    expect(mouse_info).to_not have_value(mouse3.id)
-    expect(mouse_info).to_not have_value(mouse4.id)
-    expect(mouse_info).to_not have_value(mouse5.id)
-    expect(mouse_info).to_not have_value(mouse6.id)
-    expect(mouse_info).to_not have_value(mouse7.id)
-    expect(mouse_info).to_not have_value(mouse8.id)
-    expect(mouse_info).to_not have_value(mouse9.id)
-    expect(mouse_info).to_not have_value(mouse10.id)
-    expect(mouse_info).to_not have_value(mouse11.id)
-    expect(mouse_info).to_not have_value(mouse12.id)
-    expect(mouse_info).to_not have_value(mouse13.id)
+    expect(first_mouse_info).to have_value(mouse1.id)
+    expect(first_mouse_info).to_not have_value(mouse2.id)
+    expect(first_mouse_info).to_not have_value(mouse3.id)
+    expect(first_mouse_info).to_not have_value(mouse4.id)
+    expect(first_mouse_info).to_not have_value(mouse5.id)
+    expect(first_mouse_info).to_not have_value(mouse6.id)
+    expect(first_mouse_info).to_not have_value(mouse7.id)
+    expect(first_mouse_info).to_not have_value(mouse8.id)
+    expect(first_mouse_info).to_not have_value(mouse9.id)
+    expect(first_mouse_info).to_not have_value(mouse10.id)
+    expect(first_mouse_info).to_not have_value(mouse11.id)
+    expect(first_mouse_info).to_not have_value(mouse12.id)
+    expect(first_mouse_info).to_not have_value(mouse13.id)
   end
 
   it "finds trisomic" do
-    get "api/v1/mice/find?trisomic=#{mouse2.trisomic}"
-    mouse_info = JSON.parse(response.body, symbolize_names: true)
+    get "/api/v1/mice/find?trisomic=#{mouse2.trisomic}"
+    first_mouse_info = JSON.parse(response.body, symbolize_names: true)[0]
+    second_mouse_info = JSON.parse(response.body, symbolize_names: true)[1]
 
     expect(response).to be_success
     expect(mouse_info).to have_value(mouse2.id)
@@ -77,7 +92,7 @@ describe "find mouse API" do
   end
 
   it "finds by protein" do
-    get "api/v1/mice/find?protein_ug_per_ml=3"
+    get "/api/v1/mice/find?protein_ug_per_ml=3"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -97,7 +112,7 @@ describe "find mouse API" do
   end
 
   it "finds by diet" do
-    get "api/v1/mice/find?diet=#{mouse5.diet}"
+    get "/api/v1/mice/find?diet=#{mouse5.diet}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -117,7 +132,7 @@ describe "find mouse API" do
   end
 
   it "finds by color" do
-    get "api/v1/mice/find?color=#{mouse6.color}"
+    get "/api/v1/mice/find?color=#{mouse6.color}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -137,7 +152,7 @@ describe "find mouse API" do
   end
 
   it "finds by sex" do
-    get "api/v1/find?sex=#{mouse8.sex}"
+    get "/api/v1/mice/find?sex=#{mouse8.sex}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -157,7 +172,7 @@ describe "find mouse API" do
   end
 
   it "finds by date of birth" do
-    get "api/v1/mice/find?date_of_birth=#{mouse7.date_of_birth}"
+    get "/api/v1/mice/find?date_of_birth=#{mouse7.date_of_birth}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -177,7 +192,7 @@ describe "find mouse API" do
   end
 
   it "finds by experiment start date" do
-    get "api/v1/mice/find?experiment_start_date=#{mouse8.experiment_start_date}"
+    get "/api/v1/mice/find?experiment_start_date=#{mouse8.experiment_start_date}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -197,7 +212,7 @@ describe "find mouse API" do
   end
 
   it "finds by harvest date" do
-    get "api/v1/mice/find?harvest_date=#{mouse9.harvest_date}"
+    get "/api/v1/mice/find?harvest_date=#{mouse9.harvest_date}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -217,7 +232,7 @@ describe "find mouse API" do
   end
 
   it "finds by group number" do
-    get "api/v1/mice/find?group=#{mouse10.group}"
+    get "/api/v1/mice/find?group=#{mouse10.group}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -237,7 +252,7 @@ describe "find mouse API" do
   end
 
   it "finds by mean temperature" do
-    get "api/v1/mice/find?mean_temp=80"
+    get "/api/v1/mice/find?mean_temp=80"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -257,7 +272,7 @@ describe "find mouse API" do
   end
 
   it "finds by weight in grams" do
-    get "api/v1/mice/find?weight_in_grams=40"
+    get "/api/v1/mice/find?weight_in_grams=40"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
