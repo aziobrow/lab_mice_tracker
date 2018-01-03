@@ -146,30 +146,34 @@ describe "find mouse API" do
     expect(mouse_info[1]).to have_value(group_12_mouse2.id)
   end
 
-  xit "finds by temperature" do
-    get "/api/v1/mice/find?mean_temp=80"
+  it "finds by temperature" do
+    low_temp_mouse = create(:mouse_low_temp)
+    low_temp_mouse2 = create(:mouse_low_temp)
+    get "/api/v1/mice/find?harvest_brain_temp=#{low_temp_mouse.harvest_brain_temp.floor}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
     expect(mouse_info.count).to eq(2)
-    expect(mouse_info[0]).to have_value(experiment_start_mouse.id)
-    expect(mouse_info[1]).to have_value(experiment_start_mouse2.id)
+    expect(mouse_info[0]).to have_value(low_temp_mouse.id)
+    expect(mouse_info[1]).to have_value(low_temp_mouse2.id)
   end
 
-  xit "finds by weight in grams" do
-    get "/api/v1/mice/find?weight_in_grams=40"
+  it "finds by weight in grams" do
+    heavy_mouse = create(:mouse_heavy)
+    heavy_mouse2 = create(:mouse_heavy)
+    get "/api/v1/mice/find?weight_in_grams=#{heavy_mouse.weight_in_grams.floor}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
     expect(mouse_info.count).to eq(2)
-    expect(mouse_info[0]).to have_value(experiment_start_mouse.id)
-    expect(mouse_info[1]).to have_value(experiment_start_mouse2.id)
+    expect(mouse_info[0]).to have_value(heavy_mouse.id)
+    expect(mouse_info[1]).to have_value(heavy_mouse2.id)
   end
 
-  xit "finds by status" do
+  it "finds by status" do
     live_mouse = create(:mouse_live)
     live_mouse2 = create(:mouse_live)
-    get "/api/v1/mice/find?status=live_mouse.status"
+    get "/api/v1/mice/find?status=#{live_mouse.status}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success

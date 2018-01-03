@@ -12,7 +12,7 @@ FactoryBot.define do
     group "6"
     harvest_brain_temp 93.2
     weight_in_grams 39.8
-    status "harvested"
+    status 1
 
     factory :mouse_trisomic_true do
       trisomic true
@@ -50,8 +50,8 @@ FactoryBot.define do
       group "12"
     end
 
-    factory :mouse_low_mean_temp do
-      mean_temp 88.9
+    factory :mouse_low_temp do
+      harvest_brain_temp 88.9
     end
 
     factory :mouse_heavy do
@@ -59,7 +59,7 @@ FactoryBot.define do
     end
 
     factory :mouse_live do
-      status "live"
+      status 0
     end
   end
 end
