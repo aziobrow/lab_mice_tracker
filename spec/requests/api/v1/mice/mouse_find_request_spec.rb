@@ -9,7 +9,7 @@ describe "find mouse API" do
     let(:mouse2) { Mouse.second }
 
   it "responds with all attributes of a mouse" do
-    get "/api/v1/mice/find?id=#{mouse1.id}"
+    get "/api/v1/mice/find?id=#{mouse1.original_id}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -27,15 +27,6 @@ describe "find mouse API" do
     expect(mouse_info[0]).to have_value(mouse1.group)
     expect(mouse_info[0]).to have_value(mouse1.harvest_brain_temp)
     expect(mouse_info[0]).to have_value(mouse1.weight_in_grams)
-  end
-
-  it "finds by original id" do
-    get "/api/v1/mice/find?original_id=#{mouse1.original_id}"
-    mouse_info = JSON.parse(response.body, symbolize_names: true)[0]
-
-    expect(response).to be_success
-    expect(mouse_info).to have_value(mouse1.id)
-    expect(mouse_info).to_not have_value(mouse2.id)
   end
 
   it "finds trisomic" do
@@ -180,5 +171,26 @@ describe "find mouse API" do
     expect(mouse_info.count).to eq(2)
     expect(mouse_info[0]).to have_value(live_mouse.id)
     expect(mouse_info[1]).to have_value(live_mouse2.id)
+  end
+
+  it "finds by trisomic and rapa" do
+    create(:mouse, diet: 'rapa', trisomic: true)
+    create(:mouse, trisomic: true)
+    get "/api/v1/mice/find?trisomic=true&diet=rapa"
+
+    mouse_info = JSON.parse(response.body, symbolize_names: true)
+    expect(response).to be_success
+    expect(mouse_info.count).to eq(1)
+  end
+
+  it "finds by trisomic and birth date" do
+    create(:mouse, trisomic: true)
+    create(:mouse, date_of_birth: '3/3/2013')
+    get "/api/v1/mice/find?trisomic=true&date_of_birth=3/3/2013"
+
+    mouse_info = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_success
+    expect(mouse_info.count).to eq(1)
   end
 end
