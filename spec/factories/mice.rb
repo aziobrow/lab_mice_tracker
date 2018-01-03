@@ -9,7 +9,7 @@ FactoryBot.define do
     date_of_birth "6/19/2011"
     experiment_start_date "10/17/2011"
     harvest_date "12/20/2011"
-    group "6"
+    group_number "6"
     harvest_brain_temp 93.2
     weight_in_grams 39.8
     status 1
@@ -47,7 +47,7 @@ FactoryBot.define do
     end
 
     factory :mouse_group_twelve do
-      group "12"
+      group_number "12"
     end
 
     factory :mouse_low_temp do

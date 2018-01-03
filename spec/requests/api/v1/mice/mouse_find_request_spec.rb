@@ -24,7 +24,7 @@ describe "find mouse API" do
     expect(mouse_info[0]).to have_value(mouse1.date_of_birth)
     expect(mouse_info[0]).to have_value(mouse1.experiment_start_date)
     expect(mouse_info[0]).to have_value(mouse1.harvest_date)
-    expect(mouse_info[0]).to have_value(mouse1.group)
+    expect(mouse_info[0]).to have_value(mouse1.group_number)
     expect(mouse_info[0]).to have_value(mouse1.harvest_brain_temp)
     expect(mouse_info[0]).to have_value(mouse1.weight_in_grams)
   end
@@ -128,7 +128,7 @@ describe "find mouse API" do
   it "finds by group number" do
     group_12_mouse = create(:mouse_group_twelve)
     group_12_mouse2 = create(:mouse_group_twelve)
-    get "/api/v1/mice/find?group=#{group_12_mouse.group}"
+    get "/api/v1/mice/find?group_number=#{group_12_mouse.group_number}"
     mouse_info = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_success
@@ -185,11 +185,30 @@ describe "find mouse API" do
 
   it "finds by trisomic and birth date" do
     create(:mouse, trisomic: true)
-    create(:mouse, date_of_birth: '3/3/2013')
+    create(:mouse, trisomic: true, date_of_birth: '3/3/2013')
     get "/api/v1/mice/find?trisomic=true&date_of_birth=3/3/2013"
 
     mouse_info = JSON.parse(response.body, symbolize_names: true)
+    expect(response).to be_success
+    expect(mouse_info.count).to eq(1)
+  end
 
+  it "finds by trisomic and control diet" do
+    create(:mouse, trisomic: true, diet: 'Contr')
+    create(:mouse, trisomic: true, diet: 'Contr')
+    get "/api/v1/mice/find?trisomic=true&diet=Contr"
+
+    mouse_info = JSON.parse(response.body, symbolize_names: true)
+    expect(response).to be_success
+    expect(mouse_info.count).to eq(2)
+  end
+
+  it "finds by trisomic and rapa diet" do
+    create(:mouse, trisomic: true)
+    create(:mouse, trisomic: true, diet: 'rapa')
+    get "/api/v1/mice/find?trisomic=true&diet=rapa"
+
+    mouse_info = JSON.parse(response.body, symbolize_names: true)
     expect(response).to be_success
     expect(mouse_info.count).to eq(1)
   end
