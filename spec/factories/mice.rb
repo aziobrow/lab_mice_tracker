@@ -10,14 +10,15 @@ FactoryBot.define do
     experiment_start_date "10/17/2011"
     harvest_date "12/20/2011"
     group "6"
-    mean_temp 93.2
+    harvest_brain_temp 93.2
     weight_in_grams 39.8
+    status "harvested"
 
     factory :mouse_trisomic_true do
       trisomic true
     end
 
-    factory :mouse_three_g_protein do
+    factory :mouse_high_protein do
       protein_ug_per_ml 3.045
     end
 
@@ -56,6 +57,9 @@ FactoryBot.define do
     factory :mouse_heavy do
       weight_in_grams 40.2
     end
-    
+
+    factory :mouse_live do
+      status "live"
+    end
   end
 end
