@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe CSVReader do
-  let(:reader)  { CSVReader.new('/data/mouse_attributes.csv') }
+  let(:reader)  { CSVReader.new('app/data/mouse_attributes.csv') }
 
   it "intializes with a csv file" do
-    expect(reader.csv_file).to eq('/data/mouse_attributes.csv')
+    expect(reader.csv_file).to eq('app/data/mouse_attributes.csv')
   end
 
   it "converts trisomic value to a boolean" do
@@ -55,7 +55,6 @@ describe CSVReader do
   it "converts brain temp to float" do
     expect(reader.clean_brain_temp("")).to eq(nil)
     expect(reader.clean_brain_temp("xyz")).to eq(nil)
-    expect(reader.clean_brain_temp("CD")).to eq("CD")
     expect(reader.clean_brain_temp("87.9")).to eq(87.9)
   end
 
@@ -67,10 +66,23 @@ describe CSVReader do
   end
 
   it "converts csv data into mice" do
-    mice_reader = CSVReader.new('/data/mouse_attributes_fixture.csv')
+    mice_reader = CSVReader.new('app/data/mouse_attributes_fixture.csv')
     mice_reader.csv_to_mice
+    mouse = Mouse.first
 
     expect(Mouse.all.count).to eq(4)
+    expect(mouse.original_id).to eq("4555-0")
+    expect(mouse.trisomic).to eq(true)
+    expect(mouse.protein_ug_per_ml).to eq(nil)
+    expect(mouse.diet).to eq("rapamycin")
+    expect(mouse.color).to eq("agouti")
+    expect(mouse.sex).to eq("male")
+    expect(mouse.date_of_birth).to eq("6/19/2011")
+    expect(mouse.experiment_start_date).to eq("10/17/2011")
+    expect(mouse.harvest_date).to eq("12/20/2011")
+    expect(mouse.group_number).to eq("6")
+    expect(mouse.harvest_brain_temp).to eq(93.2)
+    expect(mouse.weight_in_grams).to eq(40.5)
   end
 
 end

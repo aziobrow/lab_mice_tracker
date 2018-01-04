@@ -61,9 +61,7 @@ class CSVReader
   end
 
   def clean_brain_temp(value)
-    if value == "CD"
-      return value
-    elsif is_float?(value)
+    if is_float?(value)
       return value.to_f
     else
       return nil
@@ -86,7 +84,7 @@ class CSVReader
       puts "Mouse #{count} created"
       count += 1
 
-      Mouse.create!(original_id: original_id,
+      Mouse.create!(original_id: mouse[:id],
                     trisomic: clean_trisomic(mouse[:trisomic]),
                     protein_ug_per_ml: clean_protein(mouse[:protein_ug_per_ml]),
                     diet: clean_diet(mouse[:diet]),
@@ -94,8 +92,9 @@ class CSVReader
                     sex: clean_gender(mouse[:sex]),
                     date_of_birth: mouse[:date_of_birth],
                     experiment_start_date: mouse[:experiment_start_date],
+                    harvest_date: mouse[:harvest_date],
                     group_number: mouse[:group_number],
-                    harvest_brain_temp: clean_brain_temp(mouse[:harvest_date]),
+                    harvest_brain_temp: clean_brain_temp(mouse[:harvest_brain_temp]),
                     weight_in_grams: clean_weight(mouse[:weight_in_grams]),
                     status: 1
                   )
