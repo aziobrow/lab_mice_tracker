@@ -86,16 +86,19 @@ class CSVReader
       puts "Mouse #{count} created"
       count += 1
 
-      created = Mouse.create!(original_id: original_id,
-                    trisomic: school[:name],
-                    address: school[:address],
-                    zip_code: school[:zipcode9],
-                    phone: school[:phone],
-                    principal: school[:principalname],
-                    grade_levels: school[:gradelevels],
-                    web_url: school[:web_url],
-                    description: school[:schooltypedescription],
-                    district: District.all.sample)
+      Mouse.create!(original_id: original_id,
+                    trisomic: clean_trisomic(mouse[:trisomic]),
+                    protein_ug_per_ml: clean_protein(mouse[:protein_ug_per_ml]),
+                    diet: clean_diet(mouse[:diet]),
+                    color: clean_color(mouse[:color]),
+                    sex: clean_gender(mouse[:sex]),
+                    date_of_birth: mouse[:date_of_birth],
+                    experiment_start_date: mouse[:experiment_start_date],
+                    group_number: mouse[:group_number],
+                    harvest_brain_temp: clean_brain_temp(mouse[:harvest_date]),
+                    weight_in_grams: clean_weight(mouse[:weight_in_grams]),
+                    status: 1
+                  )
     end
   end
 

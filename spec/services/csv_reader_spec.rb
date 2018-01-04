@@ -66,4 +66,11 @@ describe CSVReader do
     expect(reader.clean_brain_temp("41.0")).to eq(41.0)
   end
 
+  it "converts csv data into mice" do
+    mice_reader = CSVReader.new('/data/mouse_attributes_fixture.csv')
+    mice_reader.csv_to_mice
+
+    expect(Mouse.all.count).to eq(4)
+  end
+
 end
